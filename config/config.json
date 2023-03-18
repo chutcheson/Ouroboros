@@ -1,0 +1,3 @@
+{ "product" : "Write a program that generates a sudoku. Also write a fast and efficient solver equivalent to a leetcode solution. Have the solver print out its step count.",
+  "product_retries" : 10, 
+  "developer_retries" : 10 }
