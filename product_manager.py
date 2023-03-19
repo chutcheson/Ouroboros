@@ -31,6 +31,7 @@ def build_product(product_name, unique_id, config, logger):
 
             if success:
                 logger.info(f"The whole process completed successfully for product.")
+                print(f"Product {product_name}:{unique_id} built successfully.")
                 break
             else:
                 logger.warning(f"Failed after {i + 1} product retries for product.")

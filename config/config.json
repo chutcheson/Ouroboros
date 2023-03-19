@@ -1,3 +1,3 @@
-{ "product" : "Write a program that generates a valid sudoku. It should also offer a solver that finds a fast and efficient solution to the problem. It should be a high quality leetcode style solver.",
+{ "product" : "Write a program that generates a valid sudoku. It should also offer a solver that finds a fast and efficient solution to the problem. It should be a high quality leetcode style solver. It should ensure that it prunes the range of available solutions with each candidate move whenever a candidate move forces particular moves.",
   "product_retries" : 10, 
   "developer_retries" : 10 }
