@@ -6,43 +6,37 @@ from prompts import get_product_manager_prompt
 from remote_agent import query_remote_agent
 from developer import Developer
 
-# Load config file
-with open("config/config.json", "r") as config_file:
-    config = json.load(config_file)
+def build_product(product_name, unique_id, config, logger):
+    logger.info(f"Starting build process for product.")
 
-product_retries = config["product_retries"]
-
-# Run the whole process with retries
-for i in range(product_retries):
-    try:
-        # Get product manager prompt
-        prompt = get_product_manager_prompt(config["product"])
-        steps = query_remote_agent(prompt)
-
-        for step in steps:
-            step["product"] = config["product"]
-
-        # Process each step with the developer
-        developer = Developer(config["developer_retries"])
-        success = developer.process_steps(steps)
-
-        if success:
-            print("The whole process completed successfully.")
-            break
-        else:
-            print(f"Failed after {i + 1} product retries.")
-    except Exception as e:
-        print(f"Error in product manager retry {i + 1}: {e}")
-        print(traceback.format_exc())
-
-    if os.path.exists("code"):
-        for filename in os.listdir("code"):
-            file_path = os.path.join("code", filename)
-            try:
-                if os.path.isfile(file_path):
-                    os.unlink(file_path)
-            except Exception as e:
-                print(f"Failed to delete {file_path}. Reason: {e}")
+    product_retries = config["product_retries"]
+    
+    if unique_id is None:
+        base_code_dir = product_name
     else:
-        print("The 'code' directory does not exist.")
+        base_code_dir = os.path.join(product_name, str(unique_id))
+
+    for i in range(product_retries):
+        try:
+            prompt = get_product_manager_prompt(config["product"])
+            logger.info(f"Querying remote agent for steps.")
+            steps = query_remote_agent(prompt, logger)
+
+            for step in steps:
+                step["product"] = config["product"]
+
+            logger.info(f"Starting developer process.")
+            developer = Developer(config["developer_retries"], base_code_dir, logger)
+            success = developer.process_steps(steps)
+
+            if success:
+                logger.info(f"The whole process completed successfully for product.")
+                break
+            else:
+                logger.warning(f"Failed after {i + 1} product retries for product.")
+        except Exception as e:
+            logger.error(f"Error in product manager retry {i + 1}.")
+            logger.error(traceback.format_exc())
+
+        developer.clear_code_directory()
 
