@@ -3,6 +3,7 @@ import json
 import logging
 import os
 import multiprocessing
+import uuid
 from product_manager import build_product
 
 def setup_logger(product_name, instance_id):
@@ -41,12 +42,13 @@ def run_instances(product_name, instances, debug):
     if instances > 1:
         processes = []
         for i in range(instances):
+            process_id = uuid.uuid4()
             if debug:
                 process_logger = setup_logger(product_name, i)
             else:
                 process_logger = None
 
-            process = multiprocessing.Process(target=build_product, args=(product_name, i, config, process_logger))
+            process = multiprocessing.Process(target=build_product, args=(product_name, process_id, config, process_logger))
             processes.append(process)
             process.start()
 

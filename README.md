@@ -16,3 +16,5 @@ The number of instances determines how many simultaneous attempts are set up to 
 The project assumes your python version is called as "python3" from the shell. If not, edit the developer file to reflect how python is called on yoru system.
 
 It works most of the time. Is a product retries count that you can set in config, which will restart the whole process n times. There is also a developer retries count feature, which you set in the same place, and which will just retry a particular code step m times.
+
+Completed code goes in the project folder under the product_name. If you ran multiple instances then each one gets an id.
