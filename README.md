@@ -13,8 +13,10 @@ Run.py takes three command-line arguments: (1) a product_name and (2) a number o
 
 The number of instances determines how many simultaneous attempts are set up to build the project. 
 
-The project assumes your python version is called as "python3" from the shell. If not, edit the developer file to reflect how python is called on yoru system.
+The project assumes your python version is called as "python3" from the shell. If not, edit the developer file to reflect how python is called on your system.
 
-It works most of the time. Is a product retries count that you can set in config, which will restart the whole process n times. There is also a developer retries count feature, which you set in the same place, and which will just retry a particular code step m times.
+It works most of the time. There is a product retries count that you can set in config, which will restart the whole process n times. There is also a developer retries count feature, which you set in the same place, and which will just retry a particular code step m times.
+
+Each of these parameters are local for each running instance.
 
 Feel free to offer improvements!
