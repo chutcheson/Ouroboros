@@ -3,7 +3,7 @@ import json
 import logging
 import os
 import multiprocessing
-import random
+import time 
 from product_manager import build_product
 
 def setup_logger(product_name, instance_id):
@@ -28,8 +28,8 @@ def setup_logger(product_name, instance_id):
     logger.addHandler(file_handler)
     return logger
 
-def generate_id():
-    return str(random.randint(1000000000, 9999999999))
+def generate_id(i):
+    return f"{int(time.time())}:{i}"
 
 def run_instances(product_name, instances, debug):
     print(f"Running {instances} instances of {product_name}.")
@@ -46,7 +46,7 @@ def run_instances(product_name, instances, debug):
     if instances > 1:
         processes = []
         for i in range(instances):
-            process_id = generate_id()
+            process_id = generate_id(i)
             if debug:
                 process_logger = setup_logger(product_name, process_id)
             else:
