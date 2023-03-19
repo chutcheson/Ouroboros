@@ -32,6 +32,7 @@ def run_instances(product_name, instances, debug):
     print(f"Running {instances} instances of {product_name}.")
     print(f"Debug mode: {debug}")
     print(f"Config file: config/config.json")
+    print(f"Project directory: projects/{product_name}/")
     print(f"Log directory: logs/{product_name}/")
     print(f"This may take time. Please wait...")
     print(f"Check the log file for progress.")
