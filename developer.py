@@ -27,7 +27,6 @@ class Developer:
                 os.remove(file_path)
             elif os.path.isdir(file_path):
                 shutil.rmtree(file_path)
-        os.rmdir(self.base_code_dir)
 
     def _process_step(self, step):
         retry = False
