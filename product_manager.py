@@ -12,9 +12,9 @@ def build_product(product_name, unique_id, config, logger):
     product_retries = config["product_retries"]
     
     if unique_id is None:
-        base_code_dir = product_name
+        base_code_dir = f"project/{product_name}"
     else:
-        base_code_dir = os.path.join(product_name, str(unique_id))
+        base_code_dir = os.path.join(f"project/{product_name}", str(unique_id))
 
     for i in range(product_retries):
         try:

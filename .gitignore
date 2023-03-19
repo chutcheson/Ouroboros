@@ -1,1 +1,10 @@
+# Ignore cache directories
+__pycache__/
+
+# Ignore logs and project directory
+logs/
+project/
+
+# Ignore key.txt file
 key.txt
+
