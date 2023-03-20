@@ -7,6 +7,7 @@ import time
 from product_manager import build_product
 
 def setup_logger(product_name, instance_id):
+
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
 
@@ -31,9 +32,8 @@ def setup_logger(product_name, instance_id):
 def generate_id(i):
     return f"{int(time.time())}:{i}"
 
-def run_instances(product_name, instances, debug):
+def run_instances(product_name, instances):
     print(f"Running {instances} instances of {product_name}.")
-    print(f"Debug mode: {debug}")
     print(f"Config file: config/config.json")
     print(f"Project directory: projects/{product_name}/")
     print(f"Log directory: logs/{product_name}/")
@@ -47,10 +47,7 @@ def run_instances(product_name, instances, debug):
         processes = []
         for i in range(instances):
             process_id = generate_id(i)
-            if debug:
-                process_logger = setup_logger(product_name, process_id)
-            else:
-                process_logger = None
+            process_logger = setup_logger(product_name, process_id)
 
             process = multiprocessing.Process(target=build_product, args=(product_name, process_id, config, process_logger))
             processes.append(process)
@@ -59,10 +56,7 @@ def run_instances(product_name, instances, debug):
         for process in processes:
             process.join()
     else:
-        if debug:
-            logger = setup_logger(product_name, None)
-        else:
-            logger = None
+        logger = setup_logger(product_name, None)
         build_product(product_name, None, config, logger)
 
 
@@ -70,9 +64,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Run multiple instances of the product building process.")
     parser.add_argument("product_name", help="Name of the product")
     parser.add_argument("instances", type=int, help="Number", default=1)         
-    parser.add_argument("--debug", action="store_true", help="Enable debug mode", default=False)                      
     
     args = parser.parse_args()
     
-    run_instances(args.product_name, args.instances, args.debug)
+    run_instances(args.product_name, args.instances)
 
